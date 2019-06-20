@@ -95,5 +95,62 @@ class MultiPoseDetector(BaseDetector):
     for bbox in results[1]:
       if bbox[4] > self.opt.vis_thresh:
         debugger.add_coco_bbox(bbox[:4], 0, bbox[4], img_id='multi_pose')
-        debugger.add_coco_hp(bbox[5:39], img_id='multi_pose')
+        debugger.add_coco_hp(bbox[5:39], img_id='multi_pose') ################################################################### <----------
+        #print(bbox[5],bbox[6])
+        ########################    HEAD      ################################
+        
+        cv2.circle(image,(int(bbox[5]),int(bbox[6])), 7, (0,0,255), -1) # Nariz
+        cv2.line(image,(int(bbox[5]),int(bbox[6])),(int(bbox[7]),int(bbox[8])),(0,0,255),2)
+        cv2.circle(image,(int(bbox[7]),int(bbox[8])), 7, (0,0,255), -1)
+        cv2.line(image,(int(bbox[5]),int(bbox[6])),(int(bbox[9]),int(bbox[10])),(0,0,255),2)
+        cv2.circle(image,(int(bbox[9]),int(bbox[10])), 7, (0,0,255), -1)
+
+
+        for i in range(0,4):
+          x=11+i*2
+          y=12+i*2
+          cv2.circle(image,(int(bbox[x]),int(bbox[y])), 7, (0,0,255), -1)
+          cv2.line(image,(int(bbox[x]),int(bbox[y])),(int(bbox[x-4]),int(bbox[y-4])),(0,0,255),2)
+
+        cv2.line(image,(int(bbox[15]),int(bbox[16])),(int(bbox[17]),int(bbox[18])),(0,0,255),2)
+
+                #cv2.circle(image,(int(bbox[9]),int(bbox[10])), 7, (0,0,255), -1)
+        #cv2.circle(image,(int(bbox[11]),int(bbox[12])), 7, (0,0,255), -1)
+        #cv2.circle(image,(int(bbox[13]),int(bbox[14])), 7, (0,0,255), -1)
+        ########################    SHIRT     ################################
+        cv2.line(image,(int(bbox[15]),int(bbox[16]+5)),(int(bbox[17]),int(bbox[18]+5)),(0,255,0),2)
+
+        for i in range(0,6):
+          x=15+i*2
+          y=16+i*2
+          cv2.circle(image,(int(bbox[x]),int(bbox[y])), 7, (0,255,0), -1)
+          cv2.line(image,(int(bbox[x]),int(bbox[y])),(int(bbox[x-4]),int(bbox[y-4])),(0,255,0),2)
+
+
+        cv2.circle(image,(int(bbox[27]),int(bbox[28])), 7, (0,255,0), -1)
+        cv2.line(image,(int(bbox[27]),int(bbox[28])),(int(bbox[15]),int(bbox[16])),(0,255,0),2)
+
+        cv2.circle(image,(int(bbox[29]),int(bbox[30])), 7, (0,255,0), -1)
+        cv2.line(image,(int(bbox[29]),int(bbox[30])),(int(bbox[17]),int(bbox[18])),(0,255,0),2)
+
+        cv2.line(image,(int(bbox[29]),int(bbox[30]+5)),(int(bbox[27]),int(bbox[28]+5)),(0,255,0),2)
+
+        #######################     PANTS     ###############################
+        cv2.line(image,(int(bbox[29]),int(bbox[30])),(int(bbox[27]),int(bbox[28])),(255,0,0),2)
+        cv2.circle(image,(int(bbox[27]-5),int(bbox[28])), 7, (255,0,0), -1)
+        cv2.circle(image,(int(bbox[29]+5),int(bbox[30])), 7, (255,0,0), -1)
+
+        for i in range(0,4):
+          x=31+i*2
+          y=32+i*2
+          cv2.circle(image,(int(bbox[x]),int(bbox[y])), 7, (255,0,0), -1)
+          cv2.line(image,(int(bbox[x]),int(bbox[y])),(int(bbox[x-4]),int(bbox[y-4])),(255,0,0),2)
+
+
+
+        #cv2.circle(image,(int(bbox[31]),int(bbox[32])), 7, (255,0,0), -1)
+        #cv2.circle(image,(int(bbox[33]),int(bbox[34])), 7, (255,0,0), -1)
+        #cv2.circle(image,(int(bbox[35]),int(bbox[36])), 7, (255,0,0), -1)
+        #cv2.circle(image,(int(bbox[37]),int(bbox[38])), 7, (255,0,0), -1)
+        cv2.imshow('segmentation', image)
     debugger.show_all_imgs(pause=self.pause)
